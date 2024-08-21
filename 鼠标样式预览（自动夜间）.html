@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>鼠标样式预览</title>
+    <style>
+        :root {
+            --bg-color: #fff;
+            --text-color: #000;
+            --button-bg-color: #ddd;
+            --button-hover-bg-color: #bbb;
+            --button-active-shadow-color: #429946;
+            --selected-button-bg-color: #4CAF50;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+        .container {
+            display: flex;
+        }
+        .buttons {
+            width: 200px;
+            padding: 20px;
+        }
+        .buttons button {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: var(--button-bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s, opacity 0.3s, box-shadow 0.3s; /* 添加box-shadow过渡效果 */
+            opacity: 0.8; /* 设置初始透明度 */
+        }
+        .buttons button:hover {
+            background-color: var(--button-hover-bg-color);
+            color: var(--button-bg-color);
+            opacity: 1; /* 鼠标悬停时完全不透明 */
+        }
+        .buttons button:active {
+            box-shadow: 0 0 100px 100px var(--button-active-shadow-color) inset; /* 添加内阴影，颜色与填充色一样 */
+            opacity: 0.8; /* 点击时透明度降低 */
+        }
+        .buttons button.selected {
+            background-color: var(--selected-button-bg-color);
+            color: var(--text-color);
+        }
+        .display {
+             position: fixed; /* 使用固定定位 */
+             top: 30px; /* 固定在顶部 */
+             left: 280px; /* 固定在左边 */
+             width: 450px; /* 宽度 */
+             height: 650px; /* 高度 */
+             border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="buttons" id="buttonsContainer"></div>
+        <div class="display" id="displayArea"></div>
+    </div>
+    <button id="toggleMode">切换模式</button>
+
+    <script>
+        const cursorStyles = [
+            { en: 'default', zh: '正常选择' },
+            { en: 'help', zh: '帮助选择' },
+            { en: 'pointer', zh: '链接选择' },
+            { en: 'progress', zh: '后台运行' },
+            { en: 'wait', zh: '忙' },
+            { en: 'crosshair', zh: '精确选择' },
+            { en: 'text', zh: '文本选择' },
+            { en: 'not-allowed', zh: '不允许' },
+            { en: 'ns-resize', zh: '垂直调整大小' },
+            { en: 'ew-resize', zh: '水平调整大小' },
+            { en: 'nwse-resize', zh: '沿对角线调整大小 1' },
+            { en: 'nesw-resize', zh: '沿对角线调整大小 2' },
+            { en: 'move', zh: '移动' },
+            { en: 'none', zh: '无鼠标' },
+        ];
+
+        let lastSelectedButton = null;
+
+        function createButtons() {
+            const buttonsContainer = document.getElementById('buttonsContainer');
+            cursorStyles.forEach(style => {
+                const button = document.createElement('button');
+                button.textContent = style.zh;
+                button.onclick = () => setCursor(style.en, button);
+                buttonsContainer.appendChild(button);
+
+                // 默认选中“正常选择”按钮
+                if (style.zh === '正常选择') {
+                    setCursor(style.en, button);
+                }
+            });
+        }
+
+        function setCursor(cursorType, button) {
+            document.getElementById('displayArea').style.cursor = cursorType;
+
+            // 取消上一个选中按钮的高亮
+            if (lastSelectedButton) {
+                lastSelectedButton.classList.remove('selected');
+            }
+
+            // 高亮当前选中的按钮
+            button.classList.add('selected');
+            lastSelectedButton = button;
+        }
+
+        createButtons();
+
+        // 切换白天和夜间模式
+        document.getElementById('toggleMode').addEventListener('click', () => {
+            const root = document.documentElement;
+            if (root.style.getPropertyValue('--bg-color') === '#0D1117') {
+                root.style.setProperty('--bg-color', '#fff');
+                root.style.setProperty('--text-color', '#000');
+                root.style.setProperty('--button-bg-color', '#ddd');
+                root.style.setProperty('--button-hover-bg-color', '#bbb');
+                root.style.setProperty('--button-active-shadow-color', '#429946');
+                root.style.setProperty('--selected-button-bg-color', '#4CAF50');
+            } else {
+                root.style.setProperty('--bg-color', '#0D1117');
+                root.style.setProperty('--text-color', '#fff');
+                root.style.setProperty('--button-bg-color', '#333');
+                root.style.setProperty('--button-hover-bg-color', '#aaa');
+                root.style.setProperty('--button-active-shadow-color', '#429946');
+                root.style.setProperty('--selected-button-bg-color', '#4CAF50');
+            }
+        });
+    </script>
+</body>
+</html>

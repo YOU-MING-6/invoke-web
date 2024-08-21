@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<body style="background-color: #0D1117;"></body>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -20,12 +21,22 @@
             cursor: pointer;
             border: none;
             border-radius: 5px;
-            background-color: #eee ;
-            color: #000;
-            transition: background-color 0.3s, color 0.3s;
+            background-color: #333;
+            color: #fff;
+            transition: background-color 0.3s, color 0.3s, opacity 0.3s, box-shadow 0.3s; /* 添加box-shadow过渡效果 */
+            opacity: 0.8; /* 设置初始透明度 */
+        }
+        .buttons button:hover {
+            background-color: #429946;
+            color: #fff;
+            opacity: 0.8; /* 鼠标悬停时透明度 */
+        }
+        .buttons button:active {
+            box-shadow: 0 0 100px 100px #429946 inset; /* 添加内阴影，颜色与填充色一样 */
+            opacity: 0.6; /* 点击时透明度 */
         }
         .buttons button.selected {
-            background-color: #4CAF50;
+            background-color: #429946;
             color: #fff;
         }
         .display {
