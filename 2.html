@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>鼠标样式切换</title>
+    <style>
+        .container {
+            display: flex;
+        }
+        .buttons {
+            width: 200px;
+            padding: 20px;
+        }
+        .buttons button {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #eee ;
+            color: #000;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .buttons button.selected {
+            background-color: #4CAF50;
+            color: #fff;
+        }
+        .display {
+            flex-grow: 1;
+            height: 100vh;
+            max-width: 800px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="buttons" id="buttonsContainer"></div>
+        <div class="display" id="displayArea"></div>
+    </div>
+
+    <script>
+        const cursorStyles = [
+            { en: 'default', zh: '正常选择' },
+            { en: 'help', zh: '帮助选择' },
+            { en: 'pointer', zh: '链接选择' },
+            { en: 'progress', zh: '后台运行' },
+            { en: 'wait', zh: '忙' },
+            { en: 'crosshair', zh: '精确选择' },
+            { en: 'text', zh: '文本选择' },
+            { en: 'not-allowed', zh: '不允许' },
+            { en: 'ns-resize', zh: '垂直调整大小' },
+            { en: 'ew-resize', zh: '水平调整大小' },
+            { en: 'nwse-resize', zh: '沿对角线调整大小 1' },
+            { en: 'nesw-resize', zh: '沿对角线调整大小 2' },
+            { en: 'move', zh: '移动' },
+            { en: 'none', zh: '无鼠标' },
+        ];
+
+        let lastSelectedButton = null;
+
+        function createButtons() {
+            const buttonsContainer = document.getElementById('buttonsContainer');
+            cursorStyles.forEach(style => {
+                const button = document.createElement('button');
+                button.textContent = style.zh;
+                button.style.backgroundColor = style.color;
+                button.onclick = () => setCursor(style.en, button);
+                buttonsContainer.appendChild(button);
+
+                // 默认选中“正常选择”按钮
+                if (style.zh === '正常选择') {
+                    setCursor(style.en, button);
+                }
+            });
+        }
+
+        function setCursor(cursorType, button) {
+            document.getElementById('displayArea').style.cursor = cursorType;
+
+            // 取消上一个选中按钮的高亮
+            if (lastSelectedButton) {
+                lastSelectedButton.classList.remove('selected');
+            }
+
+            // 高亮当前选中的按钮
+            button.classList.add('selected');
+            lastSelectedButton = button;
+        }
+
+        createButtons();
+    </script>
+</body>
+</html>
