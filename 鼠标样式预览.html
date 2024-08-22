@@ -11,6 +11,7 @@
         .buttons {
             width: 200px;
             padding: 20px;
+            background-color: transparent; /* 设置背景为透明 */
         }
         .buttons button {
             display: block;
@@ -20,22 +21,22 @@
             cursor: pointer;
             border: none;
             border-radius: 5px;
-            background-color: #ddd;
-            color: #000;
+            background-color: rgba(66, 153, 70, 0.5); /* 使用RGBA设置背景颜色为半透明 */
+            color: #fff;
             transition: background-color 0.3s, color 0.3s, opacity 0.3s, box-shadow 0.3s; /* 添加box-shadow过渡效果 */
-            opacity: 0.8; /* 设置初始透明度 */
+            opacity: 1; /* 设置初始透明度 */
         }
         .buttons button:hover {
-            background-color: #429946;
+            background-color: rgba(66, 153, 70, 1); /* 使用RGBA设置背景颜色为半透明 */
             color: #fff;
-            opacity: 0.8; /* 鼠标悬停时透明度 */
+            opacity: 0.9; /* 鼠标悬停时透明度 */
         }
         .buttons button:active {
-            box-shadow: 0 0 100px 100px #429946 inset; /* 添加内阴影，颜色与填充色一样 */
-            opacity: 0.6; /* 点击时透明度 */
+            box-shadow: 0 0 100px 100px rgba(66, 153, 70, 0.8) inset; /* 添加内阴影，颜色与填充色一样 */
+            opacity: 1; /* 点击时透明度 */
         }
         .buttons button.selected {
-            background-color: #429946;
+            background-color: rgba(66, 153, 70, 0.8); /* 使用RGBA设置背景颜色为半透明 */
             color: #fff;
         }
         .display {
@@ -45,10 +46,11 @@
              width: 450px; /* 宽度 */
              height: 650px; /* 高度 */
              border: 1px solid #ccc;
+             background-color: transparent; /* 设置背景为透明 */
         }
     </style>
 </head>
-<body style="background-color: #fff;">
+<body style="background-color: transparent;"> <!-- 设置body背景为透明 -->
     <div class="container">
         <div class="buttons" id="buttonsContainer"></div>
         <div class="display" id="displayArea"></div>
